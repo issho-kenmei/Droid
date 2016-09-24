@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:anim/cycle_interpolator"
+    android:repeatCount="10"
+    android:duration="1000"
+    android:fromXDelta="0"
+    android:fromYDelta="0"
+    android:toXDelta="0"
+    android:toYDelta="40%p" />
+
+
+<!--The interpolator specified by @android:anim/linear_interpolator.
+The linear interpolator moves the object with a constant velocity from
+the initial position to the final position.-->
+<!-- android:interpolator="@android:anim/accelerate_decelerate_interpolator"-->
+<!-- android:interpolator="@android:anim/decelerate_interpolator"-->
+<!-- android:interpolator="@android:anim/accelerate_interpolator"-->
+<!-- android:interpolator="@android:anim/linear_interpolator"-->
+
+
+
+<!-- Anticipate and Overshoot Interpolators
+The anticipate_interpolator starts by moving the view backwards before it
+accelerates forwards. This creates the effect of a slingshot. As with the accelerate interpolator,
+the final position is reached at full speed.
+
+android:interpolator="@android:anim/anticipate_interpolator"
+The opposite of the anticipate interpolator is the overshoot_interpolator.
+Here the view starts with full speed but overshoots the target before it
+returns to the final position.
+
+android:interpolator="@android:anim/overshoot_interpolator"
+Combining the effects of both the anticipate and the overshoot interpolator is
+the anticipate_overshoot_interpolator. The movement starts away from the target before
+it accelerates towards the target. It then overshoots and returns to the final position.
+
+android:interpolator="@android:anim/anticipate_overshoot_interpolator"-->
+
+
+<!-- Cycle Interpolator
+The cycle_interpolator is different from the other interpolators in the
+sense that the view moves towards and away from the target by the same amount.
+The values oscillate sinusoidally between positive and negative values.
+Theto values of the animation are not interpreted as the final values but as
+the maximum amplitude of the oscillation. Choosing the cycle interpolator is as easy as before.
+
+android:interpolator="@android:anim/cycle_interpolator"
+To illustrate the effect of the cycle interpolator I had to modify the
+layout and the animation. Because the motion goes both ways I placed the ball
+at the centre of the screen. This is easily done by changing the gravity of the
+ImageView in the layout.
+
+android:layout_gravity="center"
+Because the ball is now centred I also had to reduce the magnitude
+of the motion to 40%p in the animation XML file.
+
+android:toYDelta="40%p" -->
+
+<!--  Note: repeatCount specifies the number of repeats, excluding the
+first iteration. This means that a repeatCount of 3 will play the animation a total of 4 times.
+
+The second attribute, repeatMode, can be either restart or reverse.
+When set to restart, the animation will restart from the beginning on every repeat.
+When set to reverse, the animation will reverse direction for every repeat.-->
