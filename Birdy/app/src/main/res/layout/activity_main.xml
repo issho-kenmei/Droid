@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:id="@+id/layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Game"
+        android:id="@+id/startButton"
+        android:onClick="startGame"
+        android:layout_above="@+id/textSmall"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="103dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="WELCOME TO THE WORLD OF BIRDY"
+        android:id="@+id/textLarge"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="49dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="ENJOY!!"
+        android:id="@+id/textSmall"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="85dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/image"
+        android:src="@drawable/smile"
+        android:layout_above="@+id/startButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="51dp" />
+</RelativeLayout>
+
