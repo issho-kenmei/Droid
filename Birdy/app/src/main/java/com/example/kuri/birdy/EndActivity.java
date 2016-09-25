@@ -17,6 +17,6 @@ public class EndActivity extends AppCompatActivity {
         scoreDisplay = (TextView)findViewById(R.id.highScoreText);
         Intent intent = getIntent();
         int score = intent.getIntExtra(HIGH_SCORE,0);
-        scoreDisplay.setText("YOUR HIGHEST SCORE FOR THIS GAME: "+Integer.toString(score));
+        scoreDisplay.setText(Integer.toString(score));
     }
 }

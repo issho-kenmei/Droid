@@ -49,14 +49,16 @@ public class BirdyActivity extends AppCompatActivity {
     float[] bird_black_point2 = {0,0,0,0,0,0,0,0,0};
     int heightLayout;
     int widthLayout;
-    int score = 0;
-    int highScore = 0;
+
     TextView txt;
     boolean running = true;
     int currentTime;
     int nextTime;
     //int time;
     //int birdSpeed;
+    //score variables
+    int score = 0;
+    int highScore = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,6 @@ public class BirdyActivity extends AppCompatActivity {
         PlayAreaView image = new PlayAreaView(this);
         frame.addView(image);
         txt = (TextView) findViewById(R.id.textView);
-        //score = 0;
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         height = displaymetrics.heightPixels;
@@ -82,11 +83,11 @@ public class BirdyActivity extends AppCompatActivity {
     private class PlayAreaView extends View {
 
         private GestureDetector gestures;
-        private Matrix translate;
         private Bitmap droid;
         private Bitmap bird;
         private Bitmap black_bird;
         private Bitmap black_bird2;
+        private Matrix translate;
         private Matrix bird_translate;
         private Matrix bird_black_translate;
         private Matrix bird_black_translate2;
@@ -109,18 +110,6 @@ public class BirdyActivity extends AppCompatActivity {
         }
 
         public void onMove(float dx, float dy) {
-           //HARDCODED
-           /* if((CurrentX + dx) > (width-700))
-                return;
-            if((CurrentY + dy) > (height-1000))
-                return;
-            if((CurrentX + dx) < 0)
-                return;
-            if((CurrentY + dy) < 0)
-                return;
-            CurrentX += dx;
-            CurrentY += dy;*/
-
             translate.getValues(point); //Copy 9 values from the matrix into the array.
             CurrentX = point[2];
             CurrentY = point[5];
@@ -135,31 +124,30 @@ public class BirdyActivity extends AppCompatActivity {
         }
 
         public void moveBird(float randomX, float randomY, float rX, float rY, float rX_black_bird2,float rY_black_bird2){
-
             //check for bounds
+
             //birdy2
             bird_translate.getValues(bird_point);
             boundX = bird_point[2];
             boundY = bird_point[5];
-            if((boundX+randomX) < 0){randomX = 10;} //57 randomX *= -1;
-            if((boundY+randomY) < 0){randomY = 10;} //50 randomY *= -1;
-            if((boundX+randomX) > width - bird.getWidth()){randomX = -10;} //62 randomX *= -1;
-            if((boundY+randomY) > height - bird.getHeight()){randomY = -10;} //70 randomY *= -1;
+            if((boundX+randomX) < 0){randomX = 10;}
+            if((boundY+randomY) < 0){randomY = 10;}
+            if((boundX+randomX) > width - bird.getWidth()){randomX = -10;}
+            if((boundY+randomY) > height - bird.getHeight()){randomY = -10;}
 
             //black bird
             bird_black_translate.getValues(bird_black_point);
             bX = bird_black_point[2];
             bY = bird_black_point[5];
-            if((bX+rX) < 0){rX = 10;} //57 rX *= -1;
-            if((bY+rY) < 0){rY = 10;} //50 rY *= -1;
-            if((bX+rX) > width - bird.getWidth()){rX = -10;} //62 rX *= -1;
-            if((bY+rY) > height - bird.getHeight()){rY = -10;} //70 rY *= -1;
+            if((bX+rX) < 0){rX = 10;}
+            if((bY+rY) < 0){rY = 10;}
+            if((bX+rX) > width - bird.getWidth()){rX = -10;}
+            if((bY+rY) > height - bird.getHeight()){rY = -10;}
             //debug block
             //txt.setText(Float.toString(boundX) + " :: " + Float.toString(boundY) + " :: " + Float.toString(randomX) + " :: " + Float.toString(randomY));
             //draw at random locations
 
             int c = 0;
-
             if ((boundX >= CurrentX) && (boundX <= (CurrentX + droid.getWidth()))) {
                 if ((boundY >= CurrentY) && (boundY <= (CurrentY + droid.getHeight()/2))) {
                     if(c == 0){
@@ -173,15 +161,16 @@ public class BirdyActivity extends AppCompatActivity {
             if(score>=highScore){
                 highScore = score;
             }
-            int d = 0;
 
+            txt.setText("SCORE: " + Integer.toString(score) + "\t" +" HIGH-SCORE: " + Integer.toString(highScore));
+
+            int d = 0;
             if ((bX >= CurrentX) && (bX <= (CurrentX + droid.getWidth()))) {
                 if ((bY >= CurrentY) && (bY <= (CurrentY + droid.getHeight()))) {
                     if(d == 0){
                         d++;
                         score--;
                     }
-                    //handler.postDelayed(this, 300);
                     txt.setText("SCORE: " + Integer.toString(score) + "\t" +" HIGH-SCORE: " + Integer.toString(highScore));
                     if(score == -10){
                         running=false;
@@ -196,13 +185,12 @@ public class BirdyActivity extends AppCompatActivity {
                 bird_black_translate2.getValues(bird_black_point2);
                 bX_blackBird2 = bird_black_point2[2];
                 bY_blackBird2 = bird_black_point2[5];
-                if((bX_blackBird2+rX_black_bird2) < 0){rX_black_bird2 = 10;} //57 rX *= -1;
-                if((bY_blackBird2+rY_black_bird2) < 0){rY_black_bird2 = 10;} //50 rY *= -1;
-                if((bX_blackBird2+rX_black_bird2) > width - bird.getWidth()){rX_black_bird2 = -10;} //62 rX *= -1;
-                if((bY_blackBird2+rY_black_bird2) > height - bird.getHeight()){rY_black_bird2 = -10;} //70 rY *= -1;
+                if((bX_blackBird2+rX_black_bird2) < 0){rX_black_bird2 = 10;}
+                if((bY_blackBird2+rY_black_bird2) < 0){rY_black_bird2 = 10;}
+                if((bX_blackBird2+rX_black_bird2) > width - bird.getWidth()){rX_black_bird2 = -10;}
+                if((bY_blackBird2+rY_black_bird2) > height - bird.getHeight()){rY_black_bird2 = -10;}
 
                 int e = 0; //checks
-
                 if((bX_blackBird2>=CurrentX)&&(bX_blackBird2<=CurrentX+black_bird2.getWidth())){
                     if((bY_blackBird2>=CurrentY)&&(bY_blackBird2<=CurrentY+black_bird2.getHeight())) {
                         if (e == 0) {
@@ -211,6 +199,7 @@ public class BirdyActivity extends AppCompatActivity {
                         }
                     }
                 }
+                txt.setText("SCORE: " + Integer.toString(score) + "\t" +" HIGH-SCORE: " + Integer.toString(highScore));
                 if(score == -10){
                     running=false;
                     Intent intent2 = new Intent(BirdyActivity.this,EndActivity.class);
@@ -219,7 +208,6 @@ public class BirdyActivity extends AppCompatActivity {
                 }
 
                 bird_black_translate2.preTranslate(rX_black_bird2,rY_black_bird2);
-
             }
             bird_translate.postTranslate(randomX,randomY);
             bird_black_translate.postTranslate(rX,rY);
@@ -233,10 +221,6 @@ public class BirdyActivity extends AppCompatActivity {
             invalidate();
         }
 
-        /*public void onSetLocation(float dx, float dy) {
-            translate.postTranslate(dx, dy);
-        }*/
-
         @Override
         protected void onDraw(Canvas canvas) {
             canvas.drawBitmap(droid, translate, null);
@@ -245,18 +229,6 @@ public class BirdyActivity extends AppCompatActivity {
             if(highScore>=5){
                 canvas.drawBitmap(black_bird2,bird_black_translate2,null);
             }
-
-             /*if((boundX >= CurrentX)&&(boundX <= (CurrentX+droid.getWidth()))) {
-                a++;
-            }
-            if((boundY >= CurrentY)&&(boundY <= (CurrentY+droid.getHeight()))){
-                b++;
-            }
-
-            if((a == 1)&&(b == 1)){
-                score++;
-                txt.setText(Integer.toString(score));
-            }*/
         }
 
         @Override
@@ -294,7 +266,7 @@ public class BirdyActivity extends AppCompatActivity {
                 /*if((nextTime - currentTime)>10000){
                     handler.postDelayed(this,297);
                 }*/
-                handler.postDelayed(this,300);
+                handler.postDelayed(this,400);
             }
         });
     }

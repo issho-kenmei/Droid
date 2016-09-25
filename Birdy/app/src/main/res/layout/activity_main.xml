@@ -18,19 +18,22 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="WELCOME TO THE WORLD OF BIRDY"
         android:id="@+id/textLarge"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="49dp" />
+        android:layout_marginTop="49dp"
+        android:textStyle="italic"
+        android:typeface="monospace"
+        android:layout_above="@+id/image" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="ENJOY!!"
+        android:text="Move the froggy&apos;s mouth to the blue bird to get a point. If the black brd touches froggy, you lose a point. If you reach -10 points, you lose the game. Enjoy !!!"
         android:id="@+id/textSmall"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
