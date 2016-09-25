@@ -24,9 +24,12 @@ public class BirdyActivity extends AppCompatActivity {
     //for birdy2
     float randomX;
     float randomY;
-    //for bird
+    //for black bird
     float rX;
     float rY;
+    //for black bird 2
+    float rX_black_bird2;
+    float rY_black_bird2;
     //for moveBird method
     //for birdy2
     float boundX;
@@ -34,31 +37,36 @@ public class BirdyActivity extends AppCompatActivity {
     //for black bird
     float bX;
     float bY;
+    //for black bird 2
+    float bX_blackBird2;
+    float bY_blackBird2;
     //screen dimensions
     int height;
     int width;
     float[] point = {0,0,0,0,0,0,0,0,0};
     float[] bird_point = {0,0,0,0,0,0,0,0,0};
     float[] bird_black_point = {0,0,0,0,0,0,0,0,0};
+    float[] bird_black_point2 = {0,0,0,0,0,0,0,0,0};
     int heightLayout;
     int widthLayout;
     int score = 0;
     int highScore = 0;
     TextView txt;
     boolean running = true;
+    int currentTime;
+    int nextTime;
+    //int time;
+    //int birdSpeed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_birdy);
-
         FrameLayout frame = (FrameLayout) findViewById(R.id.graphics_holder);
         PlayAreaView image = new PlayAreaView(this);
         frame.addView(image);
-
         txt = (TextView) findViewById(R.id.textView);
         //score = 0;
-
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         height = displaymetrics.heightPixels;
@@ -66,6 +74,7 @@ public class BirdyActivity extends AppCompatActivity {
         //FrameLayout frameLayout = (FrameLayout)findViewById(R.id.graphics_holder);
         //heightLayout = frameLayout.getHeight();
         //widthLayout =  frameLayout.getWidth();
+        currentTime = (int)System.currentTimeMillis();
         runtime(image);
 
     }
@@ -77,8 +86,10 @@ public class BirdyActivity extends AppCompatActivity {
         private Bitmap droid;
         private Bitmap bird;
         private Bitmap black_bird;
+        private Bitmap black_bird2;
         private Matrix bird_translate;
         private Matrix bird_black_translate;
+        private Matrix bird_black_translate2;
 
         //constructor
         public PlayAreaView(Context context) {
@@ -93,11 +104,12 @@ public class BirdyActivity extends AppCompatActivity {
             bird_translate = new Matrix();
             black_bird = BitmapFactory.decodeResource(getResources(),R.drawable.bird);
             bird_black_translate = new Matrix();
+            black_bird2 = BitmapFactory.decodeResource(getResources(),R.drawable.blackbird2);
+            bird_black_translate2 = new Matrix();
         }
 
         public void onMove(float dx, float dy) {
-
-            //HARDCODED
+           //HARDCODED
            /* if((CurrentX + dx) > (width-700))
                 return;
             if((CurrentY + dy) > (height-1000))
@@ -122,7 +134,7 @@ public class BirdyActivity extends AppCompatActivity {
             invalidate(); //To force a view to draw, call invalidate().
         }
 
-        public void moveBird(float randomX, float randomY, float rX, float rY){
+        public void moveBird(float randomX, float randomY, float rX, float rY, float rX_black_bird2,float rY_black_bird2){
 
             //check for bounds
             //birdy2
@@ -179,8 +191,39 @@ public class BirdyActivity extends AppCompatActivity {
                     }
                 }
             }
+
+            if(highScore>=5){
+                bird_black_translate2.getValues(bird_black_point2);
+                bX_blackBird2 = bird_black_point2[2];
+                bY_blackBird2 = bird_black_point2[5];
+                if((bX_blackBird2+rX_black_bird2) < 0){rX_black_bird2 = 10;} //57 rX *= -1;
+                if((bY_blackBird2+rY_black_bird2) < 0){rY_black_bird2 = 10;} //50 rY *= -1;
+                if((bX_blackBird2+rX_black_bird2) > width - bird.getWidth()){rX_black_bird2 = -10;} //62 rX *= -1;
+                if((bY_blackBird2+rY_black_bird2) > height - bird.getHeight()){rY_black_bird2 = -10;} //70 rY *= -1;
+
+                int e = 0; //checks
+
+                if((bX_blackBird2>=CurrentX)&&(bX_blackBird2<=CurrentX+black_bird2.getWidth())){
+                    if((bY_blackBird2>=CurrentY)&&(bY_blackBird2<=CurrentY+black_bird2.getHeight())) {
+                        if (e == 0) {
+                            e++;
+                            score--;
+                        }
+                    }
+                }
+                if(score == -10){
+                    running=false;
+                    Intent intent2 = new Intent(BirdyActivity.this,EndActivity.class);
+                    intent2.putExtra(EndActivity.HIGH_SCORE,highScore);
+                    startActivity(intent2);
+                }
+
+                bird_black_translate2.preTranslate(rX_black_bird2,rY_black_bird2);
+
+            }
             bird_translate.postTranslate(randomX,randomY);
             bird_black_translate.postTranslate(rX,rY);
+            nextTime = (int)System.currentTimeMillis();
             invalidate();
         }
 
@@ -199,18 +242,21 @@ public class BirdyActivity extends AppCompatActivity {
             canvas.drawBitmap(droid, translate, null);
             canvas.drawBitmap(bird,bird_translate,null);
             canvas.drawBitmap(black_bird,bird_black_translate,null);
+            if(highScore>=5){
+                canvas.drawBitmap(black_bird2,bird_black_translate2,null);
+            }
 
-//            if((boundX >= CurrentX)&&(boundX <= (CurrentX+droid.getWidth()))) {
-//                a++;
-//            }
-//            if((boundY >= CurrentY)&&(boundY <= (CurrentY+droid.getHeight()))){
-//                b++;
-//            }
-//
-//            if((a == 1)&&(b == 1)){
-//                score++;
-//                txt.setText(Integer.toString(score));
-//            }
+             /*if((boundX >= CurrentX)&&(boundX <= (CurrentX+droid.getWidth()))) {
+                a++;
+            }
+            if((boundY >= CurrentY)&&(boundY <= (CurrentY+droid.getHeight()))){
+                b++;
+            }
+
+            if((a == 1)&&(b == 1)){
+                score++;
+                txt.setText(Integer.toString(score));
+            }*/
         }
 
         @Override
@@ -237,10 +283,17 @@ public class BirdyActivity extends AppCompatActivity {
                     rY = (float) ((Math.random()) - 0.5);
                     rY *= 1000;
 
-                    playAreaView.moveBird(randomX, randomY, rX, rY);
+                    rX_black_bird2 = (float) ((Math.random()) - 0.5);
+                    rX_black_bird2 *= 1000;
+                    rY_black_bird2 = (float) ((Math.random()) - 0.5);
+                    rY_black_bird2 *= 1000;
+                    playAreaView.moveBird(randomX, randomY, rX, rY, rX_black_bird2, rY_black_bird2);
                 }else{
                     return;
                 }
+                /*if((nextTime - currentTime)>10000){
+                    handler.postDelayed(this,297);
+                }*/
                 handler.postDelayed(this,300);
             }
         });
@@ -270,7 +323,7 @@ public class BirdyActivity extends AppCompatActivity {
         @Override
         public boolean onDoubleTap(MotionEvent e) {
             view.onResetLocation();
-            return false;
+            return true;
         }
 
         @Override
