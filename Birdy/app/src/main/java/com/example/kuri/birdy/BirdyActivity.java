@@ -1,6 +1,7 @@
 package com.example.kuri.birdy;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -168,7 +169,12 @@ public class BirdyActivity extends AppCompatActivity {
                         score--;
                     }
                     //handler.postDelayed(this, 300);
-                    txt.setText("SCORE: " + Integer.toString(score) + "\t HIGH-SCORE: " + Integer.toString(highScore));
+                    txt.setText("SCORE: " + Integer.toString(score) + "\t" +" HIGH-SCORE: " + Integer.toString(highScore));
+                    if(score == -10){
+                        Intent intent2 = new Intent(BirdyActivity.this,EndActivity.class);
+                        intent2.putExtra(EndActivity.HIGH_SCORE,highScore);
+                        startActivity(intent2);
+                    }
                 }
             }
             bird_translate.postTranslate(randomX,randomY);
