@@ -45,6 +45,7 @@ public class BirdyActivity extends AppCompatActivity {
     int score = 0;
     int highScore = 0;
     TextView txt;
+    boolean running = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,6 +172,7 @@ public class BirdyActivity extends AppCompatActivity {
                     //handler.postDelayed(this, 300);
                     txt.setText("SCORE: " + Integer.toString(score) + "\t" +" HIGH-SCORE: " + Integer.toString(highScore));
                     if(score == -10){
+                        running=false;
                         Intent intent2 = new Intent(BirdyActivity.this,EndActivity.class);
                         intent2.putExtra(EndActivity.HIGH_SCORE,highScore);
                         startActivity(intent2);
@@ -181,6 +183,7 @@ public class BirdyActivity extends AppCompatActivity {
             bird_black_translate.postTranslate(rX,rY);
             invalidate();
         }
+
 
         public void onResetLocation(){
             translate.reset(); //Set the matrix to identity
@@ -223,17 +226,21 @@ public class BirdyActivity extends AppCompatActivity {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                randomX = (float)((Math.random()) - 0.5);
-                randomX *= 1000;
-                randomY = (float)((Math.random()) - 0.5);
-                randomY *= 1000;
+                if(running) {
+                    randomX = (float) ((Math.random()) - 0.5);
+                    randomX *= 1000;
+                    randomY = (float) ((Math.random()) - 0.5);
+                    randomY *= 1000;
 
-                rX = (float)((Math.random()) - 0.5);
-                rX *= 1000;
-                rY = (float)((Math.random()) - 0.5);
-                rY *= 1000;
+                    rX = (float) ((Math.random()) - 0.5);
+                    rX *= 1000;
+                    rY = (float) ((Math.random()) - 0.5);
+                    rY *= 1000;
 
-                playAreaView.moveBird(randomX,randomY,rX,rY);
+                    playAreaView.moveBird(randomX, randomY, rX, rY);
+                }else{
+                    return;
+                }
                 handler.postDelayed(this,300);
             }
         });
