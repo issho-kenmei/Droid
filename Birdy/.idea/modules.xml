@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Birdy.iml" filepath="$PROJECT_DIR$/Birdy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Birdy-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Birdy-app.iml" group="Birdy/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Droid-Birdy.iml" filepath="$PROJECT_DIR$/.idea/modules/Droid-Birdy.iml" group="Birdy" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
